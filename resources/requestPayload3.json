@@ -1,0 +1,9 @@
+{
+    "files": {
+            "testFile3.": {
+                "content": "XML content"
+            }
+    },
+    "description": "Sample XML file",
+    "public": false
+}

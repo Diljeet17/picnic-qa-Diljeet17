@@ -1,0 +1,9 @@
+{
+    "files": {
+            "testFile4.json": {
+                "content": "JSON content"
+            }
+    },
+    "description": "Sample JSON file",
+    "public": true
+}

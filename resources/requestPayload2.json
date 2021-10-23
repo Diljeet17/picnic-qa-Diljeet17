@@ -1,0 +1,9 @@
+{
+    "files": {
+            "testFile2.txt": {
+                "content": "Text content"
+            }
+    },
+    "description": "Sample Text file",
+    "public": true
+}

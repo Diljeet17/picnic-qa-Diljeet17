@@ -1,0 +1,9 @@
+{
+    "files": {
+            "testFile1.pdf": {
+                "content": "Here is the content of this file"
+            }
+    },
+    "description": "Sample PDF file",
+    "public": false
+}
