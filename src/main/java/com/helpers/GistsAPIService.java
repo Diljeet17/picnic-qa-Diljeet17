@@ -97,7 +97,7 @@ public class GistsAPIService {
         return response;
     }
    
-   public Response listGistWithUsernameForAuthenticatedUser(){
+   public Response listGistWithUsernameForAuthenticatedUser(String username){
        
 	   Response response = given()
                .auth()
@@ -105,12 +105,25 @@ public class GistsAPIService {
                .basic(oAuth_username, oAuth_password)
                .header("Accept", ContentType.JSON.getAcceptHeader())
                .contentType(ContentType.JSON)
+               .pathParam("username", username)
                .get(EndPoints.list_gist_for_username)
                .then().extract().response();
 	   
         return response;
     }
    
+  public Response listGistWithUsernameForUnAuthenticatedUser(String username){
+       
+	   Response response = given()
+               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .contentType(ContentType.JSON)
+               .pathParam("username", username)
+               .get(EndPoints.list_gist_for_username)
+               .then().extract().response();
+	   
+        return response;
+    }
+  
    public Response listGistWithUsernameForUnAuthenticatedUser(){
        
 	   Response response = given()

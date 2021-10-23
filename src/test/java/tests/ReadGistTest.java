@@ -1,14 +1,11 @@
 package tests;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.GistsAPIService;
 import com.utils.Reports;
 import com.utils.JsonUtility;
-
 import io.restassured.response.Response;
-
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

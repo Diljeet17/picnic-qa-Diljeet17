@@ -1,26 +1,18 @@
 package tests;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.GistsAPIService;
-import com.model.RateLimitResponse;
-import com.model.Gists;
-import com.model.History;
 import com.utils.Reports;
-import com.utils.ConfigManager;
 import com.utils.JsonUtility;
-
 import io.restassured.response.Response;
-
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+
 
 public class DeleteGistTest extends Reports {
     private GistsAPIService gistAPIService;
