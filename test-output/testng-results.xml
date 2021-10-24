@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="1" total="2" passed="1" failed="0" skipped="0">
+<testng-results ignored="3" total="4" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2021-10-24T15:41:05 IST" name="Default suite" finished-at="2021-10-24T15:42:10 IST" duration-ms="65043">
+  <suite started-at="2021-10-25T01:15:19 IST" name="Default suite" finished-at="2021-10-25T01:24:44 IST" duration-ms="564742">
     <groups>
     </groups>
-    <test started-at="2021-10-24T15:41:05 IST" name="Default test" finished-at="2021-10-24T15:42:10 IST" duration-ms="65043">
-      <class name="tests.CreateGistTest">
-        <test-method is-config="true" signature="init()[pri:0, instance:tests.CreateGistTest@52815fa3]" started-at="2021-10-24T15:41:05 IST" name="init" finished-at="2021-10-24T15:41:05 IST" duration-ms="501" status="PASS">
+    <test started-at="2021-10-25T01:15:19 IST" name="Default test" finished-at="2021-10-25T01:24:44 IST" duration-ms="564742">
+      <class name="tests.ListGistTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:tests.ListGistTest@4d518b32]" started-at="2021-10-25T01:15:20 IST" name="init" finished-at="2021-10-25T01:15:20 IST" duration-ms="484" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method signature="testCreateGist()[pri:1, instance:tests.CreateGistTest@52815fa3]" started-at="2021-10-24T15:41:05 IST" name="testCreateGist" finished-at="2021-10-24T15:42:10 IST" duration-ms="64387" status="PASS">
+        <test-method signature="testListGistForAuthenticatedUser()[pri:1, instance:tests.ListGistTest@4d518b32]" started-at="2021-10-25T01:15:20 IST" name="testListGistForAuthenticatedUser" finished-at="2021-10-25T01:24:44 IST" duration-ms="564115" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testCreateGist -->
-      </class> <!-- tests.CreateGistTest -->
+        </test-method> <!-- testListGistForAuthenticatedUser -->
+      </class> <!-- tests.ListGistTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

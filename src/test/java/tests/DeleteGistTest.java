@@ -2,7 +2,7 @@ package tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.GistsAPIService;
-import com.utils.Reports;
+import com.utils.ReportUtility;
 import com.utils.JsonUtility;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -16,8 +16,8 @@ import java.util.List;
 
 
 
-@Listeners(com.utils.Reports.class)
-public class DeleteGistTest extends Reports {
+@Listeners(com.utils.ReportUtility.class)
+public class DeleteGistTest  {
     private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
     ObjectMapper mapper = new ObjectMapper();
@@ -27,10 +27,13 @@ public class DeleteGistTest extends Reports {
     	gistAPIService =new GistsAPIService();
     }
 
-    
+	/*
+	 * This test creates a gist first, then deletes it & does a GET call to verify
+	 * gist should not be found
+	 */
     @Test
     public void testDeleteGist() throws IOException{
-    	
+    	 
         String postRequestPayload;
     	
     	// Fetching request payload from testData folder
@@ -43,11 +46,11 @@ public class DeleteGistTest extends Reports {
     	// Fetch gistId from POST call's response
     	Object gistId = jsonUtility.getJsonPathFieldValue(postCallResponse.asString(), "id");
     	Response deleteCallresponse = gistAPIService.deleteGist(gistId.toString());
-    	Assert.assertEquals(deleteCallresponse.getStatusCode(), HttpStatus.SC_NO_CONTENT,"No Content");
+    	Assert.assertEquals(deleteCallresponse.getStatusCode(), HttpStatus.SC_NO_CONTENT);
     	
     	// Make GET call with deleted gistId
     	Response getCallResponse = gistAPIService.getGist(gistId.toString());
-    	Assert.assertEquals(getCallResponse.getStatusCode(), HttpStatus.SC_NOT_FOUND,"Not Found");
+    	Assert.assertEquals(getCallResponse.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
     
 }

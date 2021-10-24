@@ -1,5 +1,8 @@
 package com.constants;
 
+/*This class contains all the endpoints related to 
+Gists & Rate Limit APIs*/
+
 public class EndPoints {
     public static final String gist_get = "/gists/{gist_id}";
     public static final String gist_create = "/gists";

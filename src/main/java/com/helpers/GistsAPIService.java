@@ -17,9 +17,14 @@ import static io.restassured.RestAssured.given;
 import java.lang.reflect.Type;
 import java.util.List;
 
+
+/*This class has all the reusable methods
+  of POST, GET, DELETE operations for Gists API*/
+
 public class GistsAPIService {
     
     private static final String BASE_URL = ConfigManager.getInstance().getString("base_url");
+    private static final String header_value = ConfigManager.getInstance().getString("accept_header_value");
     private static final String oAuth_username = ConfigManager.getInstance().getString("basic_oauth_username");
     private static final String oAuth_password = ConfigManager.getInstance().getString("basic_oauth_password");
 
@@ -33,7 +38,7 @@ public class GistsAPIService {
                 .auth()
                 .preemptive()
                 .basic(oAuth_username, oAuth_password)
-                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .header("Accept", header_value)
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .post(EndPoints.gist_create)
@@ -48,7 +53,7 @@ public class GistsAPIService {
                 .auth()
                 .preemptive()
                 .basic(oAuth_username, oAuth_password)
-                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .header("Accept", header_value)
                 .contentType(ContentType.JSON)
                 .pathParam("gist_id", gist_id)
                 .get(EndPoints.gist_get)
@@ -63,7 +68,7 @@ public class GistsAPIService {
                .auth()
                .preemptive()
                .basic(oAuth_username, oAuth_password)
-               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .header("Accept", header_value)
                .contentType(ContentType.JSON)
                .pathParam("gist_id", gist_id)
                .delete(EndPoints.gist_delete)
@@ -72,63 +77,60 @@ public class GistsAPIService {
         return response;
     }
    
-   public Response listGistForAuthenticatedUser(){
+   public Response listGistForAuthenticatedUser(int perPageQueryParam, int pageQueryParam){
        
 	   Response response = given()
                .auth()
                .preemptive()
                .basic(oAuth_username, oAuth_password)
-               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .header("Accept", header_value)
                .contentType(ContentType.JSON)
+               .queryParam("per-page", perPageQueryParam)
+               .queryParam("page", pageQueryParam)
                .get(EndPoints.list_gist)
                .then().extract().response();
 	   
         return response;
     }
    
-   public Response listGistForUnAuthenticatedUser(){
+   public Response listGistForUnAuthenticatedUser(int perPageQueryParam, int pageQueryParam){
        
 	   Response response = given()
-               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .header("Accept", header_value)
                .contentType(ContentType.JSON)
+               .queryParam("per-page", perPageQueryParam)
+               .queryParam("page", pageQueryParam)
                .get(EndPoints.list_gist)
                .then().extract().response();
 
         return response;
     }
    
-   public Response listGistWithUsernameForAuthenticatedUser(String username){
+   public Response listGistWithUsernameForAuthenticatedUser(String username, int perPageQueryParam, int pageQueryParam){
        
 	   Response response = given()
                .auth()
                .preemptive()
                .basic(oAuth_username, oAuth_password)
-               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .header("Accept", header_value)
                .contentType(ContentType.JSON)
                .pathParam("username", username)
+               .queryParam("per-page", perPageQueryParam)
+               .queryParam("page", pageQueryParam)
                .get(EndPoints.list_gist_for_username)
                .then().extract().response();
 	   
         return response;
     }
    
-  public Response listGistWithUsernameForUnAuthenticatedUser(String username){
+  public Response listGistWithUsernameForUnAuthenticatedUser(String username, int perPageQueryParam, int pageQueryParam){
        
 	   Response response = given()
-               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .header("Accept", header_value)
                .contentType(ContentType.JSON)
                .pathParam("username", username)
-               .get(EndPoints.list_gist_for_username)
-               .then().extract().response();
-	   
-        return response;
-    }
-  
-   public Response listGistWithUsernameForUnAuthenticatedUser(){
-       
-	   Response response = given()
-               .header("Accept", ContentType.JSON.getAcceptHeader())
-               .contentType(ContentType.JSON)
+               .queryParam("per-page", perPageQueryParam)
+               .queryParam("page", pageQueryParam)
                .get(EndPoints.list_gist_for_username)
                .then().extract().response();
 	   
@@ -138,7 +140,7 @@ public class GistsAPIService {
    public Response createGistWithoutAuthentication(String payload){
        
        Response response = given()
-               .header("Accept", ContentType.JSON.getAcceptHeader())
+               .header("Accept", header_value)
                .contentType(ContentType.JSON)
                .body(payload)
                .post(EndPoints.gist_create)

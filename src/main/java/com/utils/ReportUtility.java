@@ -11,26 +11,24 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class Reports  implements ITestListener{
+/*ReportUtility class generates report under the folder
+'test-output/Report/$(test execution timestamp)'*/
+
+public class ReportUtility  implements ITestListener{
     protected static ExtentReports reports;
     protected static ExtentTest test;
 
     private static String resultpath = getResultPath();
 
 
-    public static void deleteDirectory(File directory) {
-        if (directory.exists()) {
-            File[] files = directory.listFiles();
-            if (null != files) {
-                for (int i = 0; i < files.length; i++) {
-                    System.out.println(files[i].getName());
-                    if (files[i].isDirectory()) {
-                        deleteDirectory(files[i]);
-                    } else {
-                        files[i].delete();
-                    }
-                }
+    public static void deleteDirectory(File file)
+    {
+        
+        for (File subfile : file.listFiles()) {
+            if (subfile.isDirectory()) {
+                deleteDirectory(subfile);
             }
+            subfile.delete();
         }
     }
 
@@ -68,6 +66,7 @@ public class Reports  implements ITestListener{
     }
 
     public void onStart(ITestContext context) {
+    	deleteDirectory(new File("test-output/Report"));
         System.out.println("ReportLocation: "+ReportLocation);
         reports = new ExtentReports(ReportLocation + "ExtentReport.html");
         test = reports.startTest("");

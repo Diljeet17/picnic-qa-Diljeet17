@@ -4,7 +4,7 @@ package tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.GistsAPIService;
 import com.model.Gists;
-import com.utils.Reports;
+import com.utils.ReportUtility;
 import com.utils.ConfigManager;
 import com.utils.JsonUtility;
 import io.restassured.response.Response;
@@ -15,8 +15,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
 
-@Listeners(com.utils.Reports.class)
-public class GistAccessibilityTest extends Reports {
+@Listeners(com.utils.ReportUtility.class)
+public class GistAccessibilityTest extends ReportUtility {
 	
     private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
@@ -55,10 +55,10 @@ public class GistAccessibilityTest extends Reports {
     	
     	// POST call to Create a Gist
     	Response response = gistAPIService.createGist(postRequestPayload);
-    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED,"Created");
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED,"Post Call Failed");
     	
     	// Mapping response to POJO
-    	Gists postGistResponse = mapper.readValue(response.getBody().print(), Gists.class);
+    	Gists postGistResponse = mapper.readValue(response.getBody().asString(), Gists.class);
     	
     	// Fetching gistId & fileObject from POST call's response
     	responseFileObject = jsonUtility.getJsonPathFieldValue(response.asString(), "files");

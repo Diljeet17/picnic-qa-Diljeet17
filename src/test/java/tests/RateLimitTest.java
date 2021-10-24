@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.RateLimitAPIService;
 import com.model.RateLimitResponse;
-import com.utils.Reports;
+import com.utils.ReportUtility;
 import com.utils.JsonUtility;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -15,8 +15,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(com.utils.Reports.class)
-public class RateLimitTest extends Reports {
+@Listeners(com.utils.ReportUtility.class)
+public class RateLimitTest extends ReportUtility {
 	
     private RateLimitAPIService rateLimitAPIService;
     JsonUtility jsonUtility = new JsonUtility();
@@ -26,13 +26,18 @@ public class RateLimitTest extends Reports {
     public void init(){
     	rateLimitAPIService =new RateLimitAPIService();
     }
-
+    
+	/*
+	 * This test validates rate limits as per rules for unauthenticated user in rate
+	 * limit response
+	 */
+	
     @Test(priority=1)
     public void testRateLimitForAuthenticatedUser() throws JsonMappingException, JsonProcessingException{
     	
     	// GET call to Rate Limit API
     	Response response = rateLimitAPIService.getRateLimitForAuthenticatedUser();
-    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK,"OK");
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     	
     	// Mapping GET call's response to POJO
     	RateLimitResponse rateLimitResponse = mapper.readValue(response.getBody().asString(), RateLimitResponse.class);
@@ -46,13 +51,17 @@ public class RateLimitTest extends Reports {
         Assert.assertEquals(responseSearchRateLimit, RateLimits.authenticatedUserSearchRateLimit);
         
     }
-
+    
+	/*
+	 * This test validates rate limits as per rules for unauthenticated user in rate
+	 * limit response
+	 */
     @Test(priority=2)
     public void testRateLimitForUnAuthenticatedUser() throws JsonMappingException, JsonProcessingException{
     	
     	// GET call to Rate Limit API
     	Response response = rateLimitAPIService.getRateLimitForUnAuthenticatedUser();
-    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK,"OK");
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
         
     	// Mapping GET call's response to POJO
     	RateLimitResponse rateLimitResponse = mapper.readValue(response.getBody().asString(), RateLimitResponse.class);

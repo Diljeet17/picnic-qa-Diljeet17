@@ -4,7 +4,7 @@ package tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.GistsAPIService;
 import com.model.Gists;
-import com.utils.Reports;
+import com.utils.ReportUtility;
 import com.utils.ConfigManager;
 import com.utils.DateTimeUtility;
 import com.utils.JsonUtility;
@@ -16,8 +16,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
 
-@Listeners(com.utils.Reports.class)
-public class CreateGistTest extends Reports {
+@Listeners(com.utils.ReportUtility.class)
+public class CreateGistTest extends ReportUtility {
 	
     private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
@@ -28,7 +28,11 @@ public class CreateGistTest extends Reports {
     public void init(){
     	gistAPIService =new GistsAPIService();
     }
-
+    
+	/*
+	 * This test validates gist creation by authenticated user & verifies various
+	 * data points in the response
+	 */
     @Test(priority=1)
     public void testCreateGist() throws IOException {
     	
@@ -51,10 +55,11 @@ public class CreateGistTest extends Reports {
     	
     	// POST call to Create a Gist
     	Response response = gistAPIService.createGist(postRequestPayload);
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED," POST Call Failed");
     	
     	// fetching date from timestamp of the POST operation
     	String currentDate = timeUtility.getCurrentUTCTime().split(":")[0]; 
-    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED,"Created");
+    	
     	
     	// Mapping response to POJO
     	Gists postGistResponse = mapper.readValue(response.getBody().asString(), Gists.class);
@@ -107,6 +112,10 @@ public class CreateGistTest extends Reports {
         }
     }
 
+	/*
+	 * This test verifies UnAuthenticated user should not be allowed to create a
+	 * gist
+	 */
     @Test(priority=2)
     public void testCreateGistWithoutAuthentication() throws IOException{
     	
@@ -117,7 +126,7 @@ public class CreateGistTest extends Reports {
     	
     	// POST call to Create a Gist without authentication
     	Response postCallResponse = gistAPIService.createGistWithoutAuthentication(postRequestPayload);
-    	Assert.assertEquals(postCallResponse.getStatusCode(), HttpStatus.SC_UNAUTHORIZED,"Unauthorized");
+    	Assert.assertEquals(postCallResponse.getStatusCode(), HttpStatus.SC_UNAUTHORIZED);
     
     }
 }

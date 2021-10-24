@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "git_pull_url",
     "git_push_url",
     "html_url",
-    "files",
     "public",
     "created_at",
     "updated_at",
@@ -53,8 +52,6 @@ public class Gists {
     private String gitPushUrl;
     @JsonProperty("html_url")
     private String htmlUrl;
-    //@JsonProperty("files")
-    //private Files files;
     @JsonProperty("public")
     private Boolean _public;
     @JsonProperty("created_at")
@@ -160,12 +157,6 @@ public class Gists {
         this.htmlUrl = htmlUrl;
     }
 
-	/*
-	 * @JsonProperty("files") public Files getFiles() { return files; }
-	 * 
-	 * @JsonProperty("files") public void setFiles(Files files) { this.files =
-	 * files; }
-	 */
     @JsonProperty("public")
     public Boolean getPublic() {
         return _public;

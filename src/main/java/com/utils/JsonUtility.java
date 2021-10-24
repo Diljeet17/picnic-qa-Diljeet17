@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 public class JsonUtility {
 
+	// Function returns value based on jsonpath
 	public Object getJsonPathFieldValue(String response, String jsonPath) {
 		Object jsonPathValue = null;
 		
@@ -17,6 +18,7 @@ public class JsonUtility {
 		return jsonPathValue;
 	}
 	
+	// Returns string form of file provided
 	public String readFileAsString(String file) throws IOException {
         return new String(Files.readAllBytes(Paths.get(file)));
     }

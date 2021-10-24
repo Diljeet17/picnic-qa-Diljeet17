@@ -3,7 +3,7 @@ package tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpers.GistsAPIService;
-import com.utils.Reports;
+import com.utils.ReportUtility;
 import com.utils.JsonUtility;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.List;
 
-@Listeners(com.utils.Reports.class)
-public class ReadGistTest extends Reports {
+@Listeners(com.utils.ReportUtility.class)
+public class ReadGistTest extends ReportUtility {
 	
 	private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
@@ -27,6 +27,11 @@ public class ReadGistTest extends Reports {
     	gistAPIService =new GistsAPIService();
     }
 
+	/*
+	 * This test creates a gist first, stores gist's id & then does a GET call with
+	 * that id to validate all the details are same in both POST & GET call responses
+	 */
+    
     @Test
     public void testReadGist() throws IOException{
     	

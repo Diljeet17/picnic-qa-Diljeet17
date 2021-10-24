@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+// This class reads properties from config.properties files
+
 public class ConfigManager {
     private  static ConfigManager manager;
     private final static Properties prop = new Properties();

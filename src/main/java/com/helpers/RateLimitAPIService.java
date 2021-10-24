@@ -15,11 +15,15 @@ import static io.restassured.RestAssured.given;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/*This class has reusable methods of GET operation 
+for Rate Limit API*/
+
 public class RateLimitAPIService {
    
     private static final String BASE_URL = ConfigManager.getInstance().getString("base_url");
     private static final String oAuth_username = ConfigManager.getInstance().getString("basic_oauth_username");
     private static final String oAuth_password = ConfigManager.getInstance().getString("basic_oauth_password");
+    private static final String header_value = ConfigManager.getInstance().getString("accept_header_value");
 
     public RateLimitAPIService(){
         RestAssured.baseURI=BASE_URL;
@@ -31,7 +35,7 @@ public class RateLimitAPIService {
                 .auth()
                 .preemptive()
                 .basic(oAuth_username, oAuth_password)
-                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .header("Accept", header_value)
                 .contentType(ContentType.JSON)
                 .get(EndPoints.rate_limit)
                 .then().extract().response();
@@ -42,7 +46,7 @@ public class RateLimitAPIService {
     public Response getRateLimitForUnAuthenticatedUser(){
         
         Response response = given()
-                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .header("Accept", header_value)
                 .contentType(ContentType.JSON)
                 .get(EndPoints.rate_limit)
                 .then().extract().response();

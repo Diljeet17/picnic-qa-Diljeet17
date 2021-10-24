@@ -9,6 +9,7 @@ import java.time.Instant;
 
 public class DateTimeUtility {
 
+	// Function to return current UTC timestamp
 	public String getCurrentUTCTime() {
 		Instant instant = Instant.now();
 		return instant.toString();
