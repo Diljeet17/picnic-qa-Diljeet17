@@ -42,17 +42,17 @@ public class ReadGistTest extends ReportUtility {
     	
     	// POST call to Create a Gist
     	Response postCallResponse = gistAPIService.createGist(postRequestPayload);
-    	Assert.assertEquals(postCallResponse.getStatusCode(), HttpStatus.SC_CREATED,"Created");
+    	Assert.assertEquals(postCallResponse.getStatusCode(), HttpStatus.SC_CREATED);
     	
     	// Fetch gistId from POST call's response
     	Object gistId = jsonUtility.getJsonPathFieldValue(postCallResponse.asString(), "id");
     	
     	// GET call with above created gistId
     	Response getCallResponse = gistAPIService.getGist(gistId.toString());
-    	Assert.assertEquals(getCallResponse.getStatusCode(), HttpStatus.SC_OK,"OK");
+    	Assert.assertEquals(getCallResponse.getStatusCode(), HttpStatus.SC_OK);
     	
     	// Validate GET Call's response against POST's call response
-    	Assert.assertEquals(postCallResponse.getBody().asString(), getCallResponse.getBody().asString());
+    	Assert.assertEquals(getCallResponse.getBody().asString(), postCallResponse.getBody().asString());
     }
   
 }

@@ -6,10 +6,12 @@ import com.helpers.GistsAPIService;
 import com.model.Gists;
 import com.utils.ReportUtility;
 import com.utils.ConfigManager;
+import com.utils.DateTimeUtility;
 import com.utils.JsonUtility;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -21,6 +23,7 @@ public class GistAccessibilityTest extends ReportUtility {
     private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
     ObjectMapper mapper = new ObjectMapper();
+    DateTimeUtility timeUtility = new DateTimeUtility();
 
     @BeforeClass
     public void init(){
@@ -49,13 +52,15 @@ public class GistAccessibilityTest extends ReportUtility {
     	String requestFilesObjectString = requestFilesObject.toString();
         String requestFilesObjectStringArray[] = requestFilesObjectString.replaceAll("\\{", "").replaceAll("\\}", "").split("=content=");
         String requestFileName = requestFilesObjectStringArray[0];
-        String requestContent = requestFilesObjectStringArray[1];
         Object requestDescription = jsonUtility.getJsonPathFieldValue(postRequestPayload, "description");
     	Object requestPublic = jsonUtility.getJsonPathFieldValue(postRequestPayload, "public");
     	
     	// POST call to Create a Gist
     	Response response = gistAPIService.createGist(postRequestPayload);
-    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED,"Post Call Failed");
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED);
+    	
+    	// fetching date from timestamp of the POST operation
+    	String currentDate = timeUtility.getCurrentUTCTime().split(":")[0];
     	
     	// Mapping response to POJO
     	Gists postGistResponse = mapper.readValue(response.getBody().asString(), Gists.class);
@@ -66,5 +71,47 @@ public class GistAccessibilityTest extends ReportUtility {
     	
     	// Validate truncated is true as file content is beyond 1 megabyte
     	Assert.assertTrue(responseFileObject.toString().contains("truncated=true"));
+    	
+    	// Compare request details against response
+    	AssertJUnit.assertEquals(postGistResponse.getDescription(), requestDescription);
+    	AssertJUnit.assertEquals(postGistResponse.getPublic().toString(), requestPublic.toString());
+        AssertJUnit.assertTrue(responseFileObject.toString().contains(requestFileName));
+        
+        // Validate Gist Details in response
+        AssertJUnit.assertTrue(postGistResponse.getForksUrl().contains(gistID.toString()));
+        AssertJUnit.assertTrue(postGistResponse.getGitPullUrl().contains(gistID.toString()));
+        AssertJUnit.assertTrue(postGistResponse.getGitPushUrl().contains(gistID.toString()));
+        AssertJUnit.assertTrue(postGistResponse.getCommitsUrl().contains(gistID.toString()));
+        AssertJUnit.assertTrue(postGistResponse.getHtmlUrl().contains(gistID.toString()));
+        AssertJUnit.assertTrue(postGistResponse.getCreatedAt().contains(currentDate));
+        
+        // Validate 'owner' node Details in response
+        AssertJUnit.assertEquals(postGistResponse.getOwner().getLogin(),username);
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getFollowersUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getFollowingUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getGistsUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getStarredUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getSubscriptionsUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getOrganizationsUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getReposUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getEventsUrl().contains(username));
+        AssertJUnit.assertTrue(postGistResponse.getOwner().getReceivedEventsUrl().contains(username));
+        
+        // Validate 'history' node Details in response
+        for(int i=0; i<postGistResponse.getHistory().size();i++) {
+        	if(postGistResponse.getHistory().get(i).getUser().getLogin().equals(username)) {
+        		AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getFollowersUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getFollowingUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getGistsUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getStarredUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getSubscriptionsUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getOrganizationsUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getReposUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getEventsUrl().contains(username));
+                AssertJUnit.assertTrue(postGistResponse.getHistory().get(i).getUser().getReceivedEventsUrl().contains(username));
+        	}
+        }
     }
 }

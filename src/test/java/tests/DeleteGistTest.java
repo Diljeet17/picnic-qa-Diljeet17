@@ -41,7 +41,7 @@ public class DeleteGistTest  {
     	
     	// POST call to Create a Gist
     	Response postCallResponse = gistAPIService.createGist(postRequestPayload);
-    	Assert.assertEquals(postCallResponse.getStatusCode(), HttpStatus.SC_CREATED,"Created");
+    	Assert.assertEquals(postCallResponse.getStatusCode(), HttpStatus.SC_CREATED);
     	
     	// Fetch gistId from POST call's response
     	Object gistId = jsonUtility.getJsonPathFieldValue(postCallResponse.asString(), "id");
