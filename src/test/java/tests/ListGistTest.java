@@ -9,12 +9,14 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.List;
 
-
+@Listeners(com.utils.Reports.class)
 public class ListGistTest extends Reports {
+	
     private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
     ObjectMapper mapper = new ObjectMapper();

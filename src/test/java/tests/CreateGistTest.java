@@ -6,19 +6,23 @@ import com.helpers.GistsAPIService;
 import com.model.Gists;
 import com.utils.Reports;
 import com.utils.ConfigManager;
+import com.utils.DateTimeUtility;
 import com.utils.JsonUtility;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
 
-
+@Listeners(com.utils.Reports.class)
 public class CreateGistTest extends Reports {
+	
     private GistsAPIService gistAPIService;
     JsonUtility jsonUtility = new JsonUtility();
     ObjectMapper mapper = new ObjectMapper();
+    DateTimeUtility timeUtility = new DateTimeUtility();
 
     @BeforeClass
     public void init(){
@@ -47,10 +51,13 @@ public class CreateGistTest extends Reports {
     	
     	// POST call to Create a Gist
     	Response response = gistAPIService.createGist(postRequestPayload);
+    	
+    	// fetching date from timestamp of the POST operation
+    	String currentDate = timeUtility.getCurrentUTCTime().split(":")[0]; 
     	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED,"Created");
     	
     	// Mapping response to POJO
-    	Gists postGistResponse = mapper.readValue(response.getBody().print(), Gists.class);
+    	Gists postGistResponse = mapper.readValue(response.getBody().asString(), Gists.class);
     	
     	// Fetching gistId & fileObject from POST call's response
     	responseFileObject = jsonUtility.getJsonPathFieldValue(response.asString(), "files");
@@ -68,6 +75,7 @@ public class CreateGistTest extends Reports {
         Assert.assertTrue(postGistResponse.getGitPushUrl().contains(gistID.toString()));
         Assert.assertTrue(postGistResponse.getCommitsUrl().contains(gistID.toString()));
         Assert.assertTrue(postGistResponse.getHtmlUrl().contains(gistID.toString()));
+        Assert.assertTrue(postGistResponse.getCreatedAt().contains(currentDate));
         
         // Validate 'owner' node Details in response
         Assert.assertEquals(postGistResponse.getOwner().getLogin(),username);

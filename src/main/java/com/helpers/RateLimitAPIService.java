@@ -16,10 +16,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class RateLimitAPIService {
-    // functions related to specific api
-    // all crud operations reusable methods
+   
     private static final String BASE_URL = ConfigManager.getInstance().getString("base_url");
-    private static final String token = ConfigManager.getInstance().getString("token");
     private static final String oAuth_username = ConfigManager.getInstance().getString("basic_oauth_username");
     private static final String oAuth_password = ConfigManager.getInstance().getString("basic_oauth_password");
 

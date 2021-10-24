@@ -1,5 +1,8 @@
 package com.utils;
+
 import java.io.File;
+import java.text.SimpleDateFormat;
+
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -33,7 +36,7 @@ public class Reports  implements ITestListener{
 
     private static String getResultPath() {
 
-        resultpath = "test";//new SimpleDateFormat("yyyy-MM-dd hh-mm.ss").format(new Date());
+        resultpath = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
         if (!new File(resultpath).isDirectory()) {
             new File(resultpath);
         }
@@ -44,34 +47,28 @@ public class Reports  implements ITestListener{
 
     public void onTestStart(ITestResult result) {
 
-        test = reports.startTest(result.getMethod().getMethodName());
-        test.log(LogStatus.INFO, result.getMethod().getMethodName());
-        System.out.println(result.getTestClass().getTestName());
-        System.out.println(result.getMethod().getMethodName());
+        //test = reports.startTest(result.getMethod().getMethodName());
+        test.log(LogStatus.INFO, "Test Started: "+result.getName());
+  
     }
 
     public void onTestSuccess(ITestResult result) {
-        test.log(LogStatus.PASS, "Test is pass");
+        test.log(LogStatus.PASS, "Test Successfully Finished "+result.getName());
 
     }
 
     public void onTestFailure(ITestResult result) {
-        test.log(LogStatus.FAIL, "Test is fail");
+        test.log(LogStatus.FAIL, "Test Failed "+result.getName());
 
     }
 
     public void onTestSkipped(ITestResult result) {
-        test.log(LogStatus.SKIP, "Test is skipped");
-
-    }
-
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        // TODO Auto-generated method stub
+        test.log(LogStatus.SKIP, "Test Skipped "+result.getName());
 
     }
 
     public void onStart(ITestContext context) {
-        System.out.println(ReportLocation + "  ReportLocation");
+        System.out.println("ReportLocation: "+ReportLocation);
         reports = new ExtentReports(ReportLocation + "ExtentReport.html");
         test = reports.startTest("");
 

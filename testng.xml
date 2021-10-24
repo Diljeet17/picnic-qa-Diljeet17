@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Github Gists API Test Automation">
+<suite name="Github:Gists API Test Automation">
   <test name="Regression">
     <classes>
       <class name="tests.CreateGistTest"/>
       <class name="tests.ReadGistTest"/>
       <class name="tests.DeleteGistTest"/>
       <class name="tests.ListGistTest"/>
+      <class name="tests.RateLimitTest"/>
+      <class name="tests.GistAccessibilityTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -12,8 +12,10 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(com.utils.Reports.class)
 public class RateLimitTest extends Reports {
 	
     private RateLimitAPIService rateLimitAPIService;
@@ -33,7 +35,7 @@ public class RateLimitTest extends Reports {
     	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK,"OK");
     	
     	// Mapping GET call's response to POJO
-    	RateLimitResponse rateLimitResponse = mapper.readValue(response.getBody().print(), RateLimitResponse.class);
+    	RateLimitResponse rateLimitResponse = mapper.readValue(response.getBody().asString(), RateLimitResponse.class);
     	
         // Fetching rate limits for core & search objects from response
     	Integer responseCoreRateLimit = rateLimitResponse.getResources().getCore().getLimit();
@@ -53,7 +55,7 @@ public class RateLimitTest extends Reports {
     	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK,"OK");
         
     	// Mapping GET call's response to POJO
-    	RateLimitResponse rateLimitResponse = mapper.readValue(response.getBody().print(), RateLimitResponse.class);
+    	RateLimitResponse rateLimitResponse = mapper.readValue(response.getBody().asString(), RateLimitResponse.class);
     	
     	// Fetching rate limits for core & search objects from response
     	Integer responseCoreRateLimit = rateLimitResponse.getResources().getCore().getLimit();
