@@ -1,33 +1,3 @@
-# Picnic Recruitment Task #
-
-Please read the following instructions carefully and make sure that you fulfil
-all requirements listed.
-
-## Overview ##
-
-This is a QA Test Automation assignment we've created specifically for our
-recruitment process.
-You were given a link to GitHub, which when you visited that link,
-created a private fork of this repository. Only you and developers at Picnic
-can see the code you push to this repository.
-
-High-level instructions:
-
-1. Read and follow the task specified below.
-2. Make a local clone of this repository on your machine, and do your work on a
-   branch other than `master`. Do not make any changes to the `master` branch.
-3. Push your changes as frequently as you like to `origin/your-branch-name`,
-   and create a pull request to merge your changes back into the `master`
-   branch. Don't merge your pull request. Once you're finished with the
-   assignment, we will do a code review of your pull request.
-4. When you're finished, [create and add][github-labels] the label `done` to
-   your pull request. This will notify us that your code is ready to be
-   reviewed. Please do **NOT** publish your solution on a publicly available
-   location (such as a public GitHub repository, your personal website, _et
-   cetera_).
-
-This process closely mimics our actual development and review cycle. We hope
-you enjoy it!
 
 ## Task ##
 
@@ -89,31 +59,31 @@ _Thanks in advance for your time and interest in Picnic!_
                              Project Instructions:
 -Language used: Java
 
--Project: Maven based project for API Test Automation of ‘Github’s Gist APIs’ using ‘Rest-Assured’ libraries.
+-Project: Maven based project for API Test Automation of â€˜Githubâ€™s Gist APIsâ€™ using â€˜Rest-Assuredâ€™ libraries.
 
 -Framework Design: TestNG
 
--Pre-Requisites: Java (1.8) & Maven installed with ‘Environment Variables’ properly set as below (download links provided 
+-Pre-Requisites: Java (1.8) & Maven installed with â€˜Environment Variablesâ€™ properly set as below (download links provided 
  at the end of the document)
-     a.	JAVA_HOME = ‘location of jdk’
-     b.	MAVEN_HOME = ‘location of apache maven folder’
-     c.	M2_HOME = ‘location of apache maven folder’
-     d.	Also, ‘Path’ variable under ‘System Variable’ should include ‘bin’ path of jdk & maven folders.
+     a.	JAVA_HOME = â€˜location of jdkâ€™
+     b.	MAVEN_HOME = â€˜location of apache maven folderâ€™
+     c.	M2_HOME = â€˜location of apache maven folderâ€™
+     d.	Also, â€˜Pathâ€™ variable under â€˜System Variableâ€™ should include â€˜binâ€™ path of jdk & maven folders.
 
 -Overview of project structure:
-    ‘src/main/java’ folder contains following packages-
-       a. ‘com.constants’ package contains all the endpoints for Gists/RateLimti APIs & all the rate limits values as per rules
-           in ‘EndPoint.java’ & ‘RateLimits.java’ files respectively.
-       b. ‘com.helpers’ package contains service classes for all applicable API operations for both APIs
-       c. ‘com.utils’ package contains ‘JsonUtility’, ‘DateTimeUtility’, ‘ReportingUtility’ files & ‘ConfigManager’ file which
-           reads data from ‘config.properties’ file
+    â€˜src/main/javaâ€™ folder contains following packages-
+       a. â€˜com.constantsâ€™ package contains all the endpoints for Gists/RateLimti APIs & all the rate limits values as per rules
+           in â€˜EndPoint.javaâ€™ & â€˜RateLimits.javaâ€™ files respectively.
+       b. â€˜com.helpersâ€™ package contains service classes for all applicable API operations for both APIs
+       c. â€˜com.utilsâ€™ package contains â€˜JsonUtilityâ€™, â€˜DateTimeUtilityâ€™, â€˜ReportingUtilityâ€™ files & â€˜ConfigManagerâ€™ file which
+           reads data from â€˜config.propertiesâ€™ file
              
-   ‘resources’ folder contains following-
-        a. ‘config.properties’ file which has base_url, header value & personal authentication credentials.
-        b. ‘testData’ files for POST API calls.
+   â€˜resourcesâ€™ folder contains following-
+        a. â€˜config.propertiesâ€™ file which has base_url, header value & personal authentication credentials.
+        b. â€˜testDataâ€™ files for POST API calls.
         
-   ‘src/test/java’ folder contains following package-
-        a. ‘tests’ has functional test like Creating Gist, Reading Gist, Deleting Gist, Listing Gist & non-functional tests like 
+   â€˜src/test/javaâ€™ folder contains following package-
+        a. â€˜testsâ€™ has functional test like Creating Gist, Reading Gist, Deleting Gist, Listing Gist & non-functional tests like 
             Gists Accessibility & Rate Limit Quotas.
 
 -Setting up dependencies using pom.xml file:
@@ -124,8 +94,8 @@ _Thanks in advance for your time and interest in Picnic!_
       d. For Reporting -> com.aventstack
       e. Plugins for command line execution -> maven-compiler-plugin & maven-surefire-plugin
       
--Command Line Tests Execution: To execute tests from command line, navigate to the project path in ‘Command Prompt’ & run command 
- ‘mvn clean test - DsuiteXmlFile=testng.xml’. This will all the test cases mentioned in ‘testing.xml’ file (ignore
+-Command Line Tests Execution: To execute tests from command line, navigate to the project path in â€˜Command Promptâ€™ & run command 
+ â€˜mvn clean test - DsuiteXmlFile=testng.xmlâ€™. This will all the test cases mentioned in â€˜testing.xmlâ€™ file (ignore
   initial  warnings, sometimes it takes longer time in initial setup, have patience, it will execute successfully).
  
 -Test Execution:
@@ -133,25 +103,25 @@ _Thanks in advance for your time and interest in Picnic!_
       a. To run individual test case, click on Run just below @Test tag
       b. To run individual test file, right click on desired test file & click Run as -> TestNG test
       c. To run all the test cases, right click testing.xml file & click Run as -> TestNG test
-      d. To run test cases from command line, navigate to the project path in ‘Command Prompt’ & 
-         run command ‘mvn clean test -DsuiteXmlFile=testng.xml’. This will all the test cases mentioned in ‘testing.xml’ file
-      e. To run test cases from .bat file, click on ‘Test_SetUp_Script’ bat file.
+      d. To run test cases from command line, navigate to the project path in â€˜Command Promptâ€™ & 
+         run command â€˜mvn clean test -DsuiteXmlFile=testng.xmlâ€™. This will all the test cases mentioned in â€˜testing.xmlâ€™ file
+      e. To run test cases from .bat file, click on â€˜Test_SetUp_Scriptâ€™ bat file.
       f. Individual test file can also be run from testing.xml by keeping only that particular test file name under 
-         ‘classes’ tag
+         â€˜classesâ€™ tag
          
 -Reporting:
-      a. ‘ITestListener’ interface has been implemented by ‘ReportUtility’ class. It generates report under 
-          ‘test-output/Report/$(timestamp of execution)’ folder. This is called ‘ExtentReport’
+      a. â€˜ITestListenerâ€™ interface has been implemented by â€˜ReportUtilityâ€™ class. It generates report under 
+          â€˜test-output/Report/$(timestamp of execution)â€™ folder. This is called â€˜ExtentReportâ€™
       b. Also, there are few default testNG reports being generated like emailable-report.html, index.html & 
-         ‘Github Gists API Test Automation’ (suite name from testing.xml file) folder
+         â€˜Github Gists API Test Automationâ€™ (suite name from testing.xml file) folder
          
    Note: 
-   1. ‘Extent Report’ will always be generated irrespective of execution done from any of the above mentioned ways 
+   1. â€˜Extent Reportâ€™ will always be generated irrespective of execution done from any of the above mentioned ways 
        but default testNG reports will only be generated when execution is done from IDE tool (individually or 
        through testing.xml file).
    2. testNg reports are always overrided after every execution while older ExtentReport is deleted at the start 
-      of every execution. If we want to save every report, we can remove ‘deleteDirectory()’ function call from ‘onStart()’ 
-      method under ‘ReportUtility.java’ file.
+      of every execution. If we want to save every report, we can remove â€˜deleteDirectory()â€™ function call from â€˜onStart()â€™ 
+      method under â€˜ReportUtility.javaâ€™ file.
 
 -Download links:
    a. Java - https://www.oracle.com/java/technologies/downloads/
